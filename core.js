@@ -39,7 +39,6 @@ const observerImgAnimation = new IntersectionObserver(
   (entries) => {
     entries.forEach(entry => {
       if(entry.isIntersecting) {
-        console.log('Executed')
       let holder = entry.target
       const classes = holder.classList
 
