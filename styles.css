@@ -7,9 +7,7 @@ span{
     position: relative;
     transition: 0.8s;
     transform: translate(0 , -20%);
-
-      font-family: "Inter", sans-serif;
-      opacity: 0;
+    opacity: 0;
 }
 
 .text-show{
