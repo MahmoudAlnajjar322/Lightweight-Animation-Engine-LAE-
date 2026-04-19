@@ -8,9 +8,20 @@ not needing any pre splitting of text, since it handles that on its own.
 and for credibility I've Developed a website using this animation engine which you could visit Right now with this link : https://foundationstudio.webprogram322.workers.dev/
 and feel free to scan this website on pagespeed, since I have done it before and it reached 92 performance on mobile and 98 on desktop, well if you somehow got 80 on mobile, its a problem of me being lazy and using oversized images that take time to load on a mobile
 
+# And this Engine works using HTML classes (bootstrap style)
+
 It has also achieved a CLS of Zero. and an INP of <100ms
 
-This animation engine works using HTML classes, which are:
+# Performance
+
+    CLS (Cumalative layout shift): Zero
+    INP (Interaction til next paint): < 100ms
+    LCP (Largest contentful paint): 1.18s average, based on the demo site, proving that the engine doesnt impact LCP
+
+    Smooth animation under 20x CPU slowdown
+    Runs smoothly on very old devices
+
+# Classes
 
     -- text-animation: tells the engine that this element should use the 'text' animation method
     -- image: tells the engine that this element should use the 'image' animation method
