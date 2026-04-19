@@ -50,7 +50,7 @@ This animation engine works using HTML classes, which are:
 
 # Notes
 
-    -- The animation auto handles text splitting meaning you could just write you're content in an h1 tag or an span or any other type and the engine would handle it on its        own, Keep in mind too, that its space senesitive so Do Not Add Any Extra Spaces
+    -- The animation auto handles text splitting meaning you could just write you're content in an h1 tag or in a span or any other type and the engine would handle it on          its own, Keep in mind too, that its space senesitive so Do Not Add Any Extra Spaces
 
     -- for image class, it only accpets delay and doesnt accept duration as I said earlier 
 
