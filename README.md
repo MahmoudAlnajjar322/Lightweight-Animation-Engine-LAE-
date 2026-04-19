@@ -20,7 +20,9 @@ This animation engine works using HTML classes, which are:
 
 # How to use
 
-    First of all to actually toggle the engine, there are two classes that tell the engine that it should animate this element which are [text-animation] , [image], once an     element gets one of these classes its automatically handled by the animation engine to deliver you silky smooth animations
+    First of all, you have to link the core.js file and the styles.css file to you're HTML file, without this step, the engine Of course wont work
+
+    then to actually toggle the engine, there are two classes that tell the engine that it should animate this element which are [text-animation] , [image], once an             element gets one of these classes its automatically handled by the animation engine to deliver you silky smooth animations
 
 # Customization
 
