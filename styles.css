@@ -1,0 +1,52 @@
+.text-animation{
+    overflow: hidden;
+}
+
+span{
+    display: inline-block;
+    position: relative;
+    transition: 0.8s;
+    transform: translate(0 , -20%);
+
+      font-family: "Inter", sans-serif;
+      opacity: 0;
+}
+
+.text-show{
+    position: relative;
+    transform: translate(0);
+    opacity: 1;
+}
+
+.image{
+    background-repeat: no-repeat;
+    transform: translate(0 , -10%);
+    background-size: cover;
+    scale: 1.2;
+    transition: cubic-bezier(0.16, 1, 0.3, 1) 1.2s;
+}
+
+.image-show-1{
+    transform: translate(0 , 0);
+}
+
+.image-show-2{
+    scale: 1;
+}
+
+.fade-in{
+    animation: fade-in 0.8s ;
+    opacity: 0;
+}
+
+@keyframes fade-in{
+    from{
+        opacity: 0;
+        transform: translate(0 , -30%);
+    }
+
+    to{
+        opacity: 1;
+        transform: translate(0 , 0);
+    }
+}
