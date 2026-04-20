@@ -60,7 +60,7 @@ const run = () => {
   const image = document.querySelectorAll(".image");
 
   text.forEach((element) => {
-    if (element.getAttribute("data-lae-split") === "false")
+    if (element.getAttribute("data-lae-split") === "none")
       observerTextAnimation.observe(element);
 
     if (element.getAttribute("data-lae-split") === "char") {
