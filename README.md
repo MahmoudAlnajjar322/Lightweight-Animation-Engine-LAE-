@@ -1,14 +1,15 @@
 # LAE [LightWeight Animation Engine]
-A 3.15KB animation engine delivering silky-smooth, GPU-accelerated animation even under 20× CPU slowdown using a simple, class based API with zero JavaScript required.
+A 3.53KB animation engine delivering silky-smooth, GPU-accelerated animation even under 20× CPU slowdown using a simple, class based API with zero JavaScript required.
 
 This engine handles custom staggering animation, and custom Image effects without straining the CPU at all
 the animation engine is completely automatic needing just 1 class to toggle an animation for any element
+and many customization options via HTML attributes ('data-lae-*)
 not needing any pre splitting of text, since it handles that on its own.
 
 and for credibility I've Developed a website using this animation engine which you could visit Right now with this link : https://foundationstudio.webprogram322.workers.dev/
 and feel free to scan this website on pagespeed, since I have done it before and it reached 92 performance on mobile and 98 on desktop, well if you somehow got 80 on mobile, its a problem of me being lazy and using oversized images that take time to load on a mobile
 
-# And this Engine works using HTML classes (bootstrap style)
+# And this Engine works using HTML classes for declaration, and HTML attributes for customization
 
 It has also achieved a CLS of Zero. and an INP of <100ms
 
@@ -21,13 +22,10 @@ It has also achieved a CLS of Zero. and an INP of <100ms
     Smooth animation under 20x CPU slowdown
     Runs smoothly on very old devices
 
-# Classes
+# Classes (Declaratives)
 
     -- text-animation: tells the engine that this element should use the 'text' animation method
     -- image: tells the engine that this element should use the 'image' animation method
-
-    -- duration: specifices how long each word should take to drop. only works for text
-    -- delay: specifices how long the animation for both Image and Text should take to start
 
 # How to use
 
@@ -37,11 +35,11 @@ It has also achieved a CLS of Zero. and an INP of <100ms
 
 # Customization
 
-    This engine also allows customization of when and how long the animation will be or start
+    This engine also allows customization of when and how long the animation will be or start using HTML attributes
 
-    -- class [duration] : use it like a simple HTML class like this <h1 class="duration-100">Demo text</h1>, In this content the number specifices how long the duration            should be by the milisecond and Its completely dynamic, the number is parsed not fetched so you could write any number you want 
-
-    -- class [delay]: Its used just as how you use duration the same context like this <h1 class="delay-100">Demo Text</h1> this one just as we said before                      delays the text animation by a set amount (by miliseconds) like in our case, once the text is on the screen after 100ms the animation triggers
+        attribute 1. 'data-lae-delay' : This attribute specifices how long an animation will be delayed until trigger, timer starts once the element is on screen
+        attirbute 2. 'data-lae-duration' : This attribute specifices how long an animation takes from start to finish
+        attribute 3. 'data-lae-split' : This attribute determines how the engine should split this text which there are three options (word , char , none) with word being           the default meaning if this attribute wasnt declared the engine will result to the word split method, with none, not splitting the text at all
 
 # Examples on use
 
@@ -54,10 +52,11 @@ It has also achieved a CLS of Zero. and an INP of <100ms
         <img class="image" url="...">
 
 
-    And for the customization classes,
+    And for the customization attributes,
 
-    -- duration: <h1 class="duration-100">Demo text</h1>
-    -- delay: <h1 class="delay-100">Demo text</h1>
+    -- delay: <h1 data-lae-delay="200">Demo text</h1>
+    -- duration: <h1 data-lae-duration="200">Demo text</h1>
+    -- splitType: <h1 data-lae-split="char">Demo text</h1>
 
 # Notes
 
