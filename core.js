@@ -3,30 +3,20 @@ const observerTextAnimation = new IntersectionObserver(
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         let holder = entry.target;
-        const classes = holder.classList;
-        let delay;
-        let duration = 0;
+        let delay = Number(holder.getAttribute("data-lae-delay"));
+        let duration = Number(holder.getAttribute("data-lae-duration"));
 
-        classes.forEach((classname) => {
-          const split = classname.split("-");
-          if (split[0] === "delay") {
-            delay = split[1];
-          }
+        if (duration <= 0) duration = 150;
 
-          if(split[0] === 'duration') {
-            duration = split[1]
-          }else{
-            duration = 200
-          }
-        });
         if (holder) {
           setTimeout(() => {
             for (let i = 0; i < holder.children.length; i++) {
-              holder.children[i].style.transitionDelay = duration * i + 'ms'
-              holder.children[i].classList.add('text-show')
+              holder.children[i].style.transitionDelay = duration * i + "ms";
+              holder.children[i].classList.add("text-show");
             }
           }, delay);
 
+          holder.classList.remove("text-animation");
           observerTextAnimation.unobserve(holder);
         }
       }
@@ -37,55 +27,75 @@ const observerTextAnimation = new IntersectionObserver(
 
 const observerImgAnimation = new IntersectionObserver(
   (entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting) {
-      let holder = entry.target
-      const classes = holder.classList
+    entries.forEach((entry) => {
+      if (
+        entry.isIntersecting &&
+        !entry.target.classList.contains("animated")
+      ) {
+        let holder = entry.target;
+        const delay = Number(holder.getAttribute("data-lae-delay"));
 
-      let delay;
-
-      classes.forEach(classname => {
-        const split = classname.split('-')
-        if(split[0] === 'delay') {
-          delay = split[1]
-        }
-      });
-
-      if(holder) {
-        setTimeout(() => {
+        if (holder) {
           setTimeout(() => {
-            holder.classList.add('image-show-1')
-          }, 100);
-  
-          setTimeout(() => {
-            holder.classList.add('image-show-2')
-          }, 1200);
-        }, delay);
+            setTimeout(() => {
+              holder.classList.add("image-show-1");
+            }, 100);
 
-        observerImgAnimation.unobserve(holder)
+            setTimeout(() => {
+              holder.classList.add("image-show-2");
+            }, 1200);
+          }, delay);
+
+          holder.classList.add("animated");
+          observerImgAnimation.unobserve(holder);
         }
       }
     });
-
   },
   { threshold: 0.5 }
 );
 
-window.addEventListener("DOMContentLoaded", () => {
+const run = () => {
   const text = document.querySelectorAll(".text-animation");
   const image = document.querySelectorAll(".image");
 
-  text.forEach(element => {
-    const split = element.textContent.split(' ')
-    let result = ''
+  text.forEach((element) => {
+    if (element.getAttribute("data-lae-split") === "false")
+      observerTextAnimation.observe(element);
 
-    split.forEach(word => {
-      result += '<span>' + word + '</span> '
-    });
+    if (element.getAttribute("data-lae-split") === "char") {
+      let result = "";
 
-    element.innerHTML = result
-    observerTextAnimation.observe(element)
+      for (let i = 0; i < element.textContent.length; i++) {
+        if (element.textContent[i] === " ") {
+          result += " ";
+        } else {
+          result += "<span>" + element.textContent[i] + "</span>";
+        }
+      }
+
+      element.innerHTML = result;
+    }
+
+    if (
+      element.getAttribute("data-lae-split") === "word" ||
+      element.getAttribute("data-lae-split") === null
+    ) {
+      const split = element.textContent.split(" ");
+      let result = "";
+
+      split.forEach((word) => {
+        result += "<span>" + word + "</span> ";
+      });
+
+      element.innerHTML = result;
+    }
+    observerTextAnimation.observe(element);
   });
 
   image.forEach((el) => observerImgAnimation.observe(el));
-});
+  console.log("LAE: system has been run");
+};
+
+window.addEventListener("DOMContentLoaded", run);
+window.addEventListener("LAE-refresh", run);
