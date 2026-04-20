@@ -9,7 +9,7 @@ not needing any pre splitting of text, since it handles that on its own.
 and for credibility I've Developed a website using this animation engine which you could visit Right now with this link : https://foundationstudio.webprogram322.workers.dev/
 and feel free to scan this website on pagespeed, since I have done it before and it reached 92 performance on mobile and 98 on desktop, well if you somehow got 80 on mobile, its a problem of me being lazy and using oversized images that take time to load on a mobile
 
-# And this Engine works using HTML classes for declaration, and HTML attributes for customization
+ And this Engine works using HTML classes for declaration, and HTML attributes for customization
 
 It has also achieved a CLS of Zero. and an INP of <100ms
 
@@ -21,6 +21,10 @@ It has also achieved a CLS of Zero. and an INP of <100ms
 
     Smooth animation under 20x CPU slowdown
     Runs smoothly on very old devices
+
+# Incremental refresh system
+
+    This engine can be re-run any time using an incremental refresh system which animates newly added elements and ignores already animated elements
 
 # Classes (Declaratives)
 
