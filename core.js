@@ -1,67 +1,90 @@
-const observerTextAnimation = new IntersectionObserver(
+const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         let holder = entry.target;
         let delay = Number(holder.getAttribute("data-lae-delay"));
         let duration = Number(holder.getAttribute("data-lae-duration"));
+        let ease = holder.getAttribute("data-lae-easing");
 
         if (duration <= 0) duration = 150;
+        if(ease === null) ease = '0.16, 1, 0.3, 1'
 
-        if (holder) {
+        if (holder && holder.classList.contains("lae-text")) {
           setTimeout(() => {
-            for (let i = 0; i < holder.children.length; i++) {
+            for (let i = 0; i < holder.childElementCount; i++) {
+
+              console.log(ease)
+              holder.children[i].style.transitionTimingFunction =
+                "cubic-bezier(" + ease + ")";
+
               holder.children[i].style.transitionDelay = duration * i + "ms";
-              holder.children[i].classList.add("text-show");
+              holder.children[i].style.transform = "translate(0 , 0)";
+              holder.children[i].style.opacity = "1";
             }
           }, delay);
-
-          holder.classList.remove("text-animation");
-          observerTextAnimation.unobserve(holder);
         }
+
+        if (holder && holder.classList.contains("lae-image")) {
+
+          holder.style.transitionTimingFunction =
+          "cubic-bezier(" + ease + ")";
+
+          setTimeout(() => {
+            setTimeout(() => {
+              holder.style.transform = "translate(0 , 0)";
+            }, 100);
+
+            setTimeout(() => {
+              holder.style.scale = "1";
+            }, 1200);
+          }, delay);
+        }
+
+        if (holder && holder.classList.contains("lae-fade")) {
+
+          holder.style.transitionTimingFunction =
+          "cubic-bezier(" + ease + ")";
+
+          setTimeout(() => {
+            setTimeout(() => {
+              holder.style.transform = "translate(0)";
+              holder.style.opacity = "1";
+            }, 100);
+
+            setTimeout(() => {
+              holder.style.scale = "1";
+            }, duration);
+          }, delay);
+        }
+
+        observer.unobserve(holder);
       }
     });
   },
   { threshold: 0.3 }
 );
 
-const observerImgAnimation = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (
-        entry.isIntersecting &&
-        !entry.target.classList.contains("animated")
-      ) {
-        let holder = entry.target;
-        const delay = Number(holder.getAttribute("data-lae-delay"));
-
-        if (holder) {
-          setTimeout(() => {
-            setTimeout(() => {
-              holder.classList.add("image-show-1");
-            }, 100);
-
-            setTimeout(() => {
-              holder.classList.add("image-show-2");
-            }, 1200);
-          }, delay);
-
-          holder.classList.add("animated");
-          observerImgAnimation.unobserve(holder);
-        }
-      }
-    });
-  },
-  { threshold: 0.5 }
-);
-
 const run = () => {
-  const text = document.querySelectorAll(".text-animation");
-  const image = document.querySelectorAll(".image");
+  const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  const text = document.querySelectorAll(".lae-text");
+  const image = document.querySelectorAll(".lae-image");
+  const fade = document.querySelectorAll(".lae-fade");
+
+  if (motionQuery.matches) {
+    console.log(
+      "LAE: Animation engine has been disabled due to user preferring reduced animation (prefers-reduced-motion: reduce)"
+    );
+    fade.forEach((el) => el.classList.remove("lae-fade"));
+    text.forEach((el) => el.classList.remove("lae-text"));
+    image.forEach((el) => el.classList.remove("lae-image"));
+    return;
+  }
 
   text.forEach((element) => {
-    if (element.getAttribute("data-lae-split") === "none")
-      observerTextAnimation.observe(element);
+    if (element.getAttribute("data-lae-split") === "false")
+      observer.observe(element);
 
     if (element.getAttribute("data-lae-split") === "char") {
       let result = "";
@@ -90,10 +113,29 @@ const run = () => {
 
       element.innerHTML = result;
     }
-    observerTextAnimation.observe(element);
+
+    let angle = element.getAttribute("data-lae-angle");
+
+    if (angle === null) angle = "0 , -20%";
+
+    for (let i = 0; i < element.childElementCount; i++) {
+      element.children[i].style.transform = "translate(" + angle + ")";
+    }
+
+    observer.observe(element);
   });
 
-  image.forEach((el) => observerImgAnimation.observe(el));
+  image.forEach((el) => observer.observe(el));
+
+  fade.forEach((el) => {
+    let angle = el.getAttribute("data-lae-angle");
+
+    if (angle === null) angle = "0 , %100";
+
+    el.style.transform = "translate(" + angle + ")";
+    observer.observe(el);
+  });
+
   console.log("LAE: system has been run");
 };
 
