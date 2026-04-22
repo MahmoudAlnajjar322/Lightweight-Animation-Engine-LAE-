@@ -1,7 +1,7 @@
 # LAE [LightWeight Animation Engine]
-A 3.53KB animation engine delivering silky-smooth, GPU-accelerated animation even under 20× CPU slowdown using a simple, class based API with zero JavaScript required.
+A 4.51KB animation engine delivering silky-smooth, GPU-accelerated animation even under 20× CPU slowdown using a simple, class based API with zero JavaScript required, with full animation control.
 
-This engine handles custom staggering animation, and custom Image effects without straining the CPU at all
+This engine handles custom staggering animation custom Image effects , and compound fade animations without straining the CPU at all
 the animation engine is completely automatic needing just 1 class to toggle an animation for any element
 and many customization options via HTML attributes ('data-lae-*)
 not needing any pre splitting of text, since it handles that on its own.
@@ -28,44 +28,57 @@ It has also achieved a CLS of Zero. and an INP of <100ms
 
 # Classes (Declaratives)
 
-    -- text-animation: tells the engine that this element should use the 'text' animation method
-    -- image: tells the engine that this element should use the 'image' animation method
+    lae-text: tells the engine that this element should use the 'text' animation method
+    lae-image: tells the engine that this element should use the 'image' animation method
+    lae-fade: tells the engine that this element should use the 'fade' animatio method
 
 # How to use
 
     First of all, you have to link the core.js file and the styles.css file to you're HTML file, without this step, the engine Of course wont work
 
-    then to actually toggle the engine, there are two classes that tell the engine that it should animate this element which are [text-animation] , [image], once an             element gets one of these classes its automatically handled by the animation engine to deliver you silky smooth animations
+    then to actually toggle the engine, there are two classes that tell the engine that it should animate this element which are 'lae-text' , 'lae-image' , 'lae-fade', once      an element gets one of these classes its automatically handled by the animation engine to deliver you silky smooth animations
 
 # Customization
 
     This engine also allows customization of when and how long the animation will be or start using HTML attributes
 
-        attribute 1. 'data-lae-delay' : This attribute specifices how long an animation will be delayed until trigger, timer starts once the element is on screen
-        attirbute 2. 'data-lae-duration' : This attribute specifices how long an animation takes from start to finish
-        attribute 3. 'data-lae-split' : This attribute determines how the engine should split this text which there are three options (word , char , none) with word being           the default meaning if this attribute wasnt declared the engine will result to the word split method, with none, not splitting the text at all
+        attribute 1. 'data-lae-delay' : This attribute specifices how long an animation will be delayed until trigger, timer starts once the element is on screen. works on                         all animation types
+        attirbute 2. 'data-lae-duration' : This attribute specifices how long an animation takes from start to finish. works on all animation types
+        attribute 3. 'data-lae-split' : This attribute determines how the engine should split this text which there are three options (word , char , none) with word being                         the default meaning if this attribute wasnt declared the engine will result to the word split method, with none, not splitting the text at all. works                         only on text animatio method
+        attribute 4. 'data-lae-angle' : This attribute tells the engine to start animating the element from a specfic element
+        attribute 5. 'data-lae-easing' : this attribute tells the engine to set a custom cubic-bezier for this element
 
 # Examples on use
 
-    -- to inform the engine that this element should be given the text animation method use this class
+    to inform the engine that this element should be given the text animation method use this class
 
-        <h1 class="text-animation">Demo Text</h1>
+        <h1 class="lae-text">Demo Text</h1>
 
-    -- to inform the engine that this element should be given the image animation method use this class
+    to inform the engine that this element should be given the image animation method use this class
 
         <img class="image" url="...">
+        
+    to inform the engine that this element should be given the image animation method use this class
+
+        <img class="lae-fade" url="...">
+        or ( this animation method is suitable for any element )
+        <img class="lae-image" url="...">
 
 
     And for the customization attributes,
 
-    -- delay: <h1 data-lae-delay="200">Demo text</h1>
-    -- duration: <h1 data-lae-duration="200">Demo text</h1>
-    -- splitType: <h1 data-lae-split="char">Demo text</h1>
+        delay: <h1 data-lae-delay="200">Demo text</h1>
+        duration: <h1 data-lae-duration="200">Demo text</h1>
+        split: <h1 data-lae-split="char">Demo text</h1>
+        angle: <h1 data-lae-angle="10% , 20%">Demo text</h1> // this attribute takes two values seperated by a column, and is moved relative to its position (basically a                    transform: translate()
+        easing: <h1 data-lae-easing="1 , 1 , 1 , 1">Demo text</h1> // this attribute is basically just a cubic-beizer so you could just treat it as a css cubic-bezier field 
 
 # Notes
 
-    -- The animation auto handles text splitting meaning you could just write you're content in an h1 tag or in a span or any other type and the engine would handle it on          its own, Keep in mind too, that its space senesitive so Do Not Add Any Extra Spaces
+    The animation auto handles text splitting meaning you could just write you're content in an h1 tag or in a span or any other type and the engine would handle it on           its own, Keep in mind too, that its space senesitive so Do Not Add Any Extra Spaces
 
-    -- for image class, it only accpets delay and doesnt accept duration as I said earlier 
+    for image class, it only accpets delay and doesnt accept duration as I said earlier 
 
-    -- For Images I'd prefer to use a <div> and add an 'image' class to it to inform the engine that this element should be animated using the image method, and add the            actual image using CSS for more control, it can work for <img>, I would prefer using a <div> for more 'background image control'
+    For Images I'd prefer to use a <div> and add an 'image' class to it to inform the engine that this element should be animated using the image method, and add the             actual image using CSS for more control, it can work for <img>, I would prefer using a <div> for more 'background image control'
+
+    Its advised to not use 'transform: translate()' on elements that are animated since that would override the engine and instead use translateX , translateY. using             transform: scale()
