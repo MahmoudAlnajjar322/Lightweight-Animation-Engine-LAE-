@@ -1,50 +1,24 @@
-.text-animation{
-    overflow: hidden;
+.lae-text{
+    overflow: hidden !important;
 }
 
-span{
+.lae-text span{
     display: inline-block;
     position: relative;
     transition: 0.8s;
-    transform: translate(0 , -20%);
+
     opacity: 0;
 }
 
-.text-show{
-    position: relative;
-    transform: translate(0);
-    opacity: 1;
-}
-
-.image{
-    background-repeat: no-repeat;
-    transform: translate(0 , -10%);
-    background-size: cover;
+.lae-image{
+    transform: translate(0 , -10%) ;
     scale: 1.2;
-    transition: cubic-bezier(0.16, 1, 0.3, 1) 1.2s;
+    transition: 1.2s;
 }
 
-.image-show-1{
-    transform: translate(0 , 0);
-}
-
-.image-show-2{
-    scale: 1;
-}
-
-.fade-in{
-    animation: fade-in 0.8s ;
+.lae-fade{
+    transform: translate(0 , 100%);
     opacity: 0;
-}
-
-@keyframes fade-in{
-    from{
-        opacity: 0;
-        transform: translate(0 , -30%);
-    }
-
-    to{
-        opacity: 1;
-        transform: translate(0 , 0);
-    }
+    scale: 0.9;
+    transition: 1.2s;
 }
