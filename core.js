@@ -8,13 +8,11 @@ const observer = new IntersectionObserver(
         let ease = holder.getAttribute("data-lae-easing");
 
         if (duration <= 0) duration = 150;
-        if(ease === null) ease = '0.16, 1, 0.3, 1'
+        if (ease === null) ease = "0.16, 1, 0.3, 1";
 
-        if (holder && holder.classList.contains("lae-text")) {
+        if (holder) {
           setTimeout(() => {
             for (let i = 0; i < holder.childElementCount; i++) {
-
-              console.log(ease)
               holder.children[i].style.transitionTimingFunction =
                 "cubic-bezier(" + ease + ")";
 
@@ -23,12 +21,11 @@ const observer = new IntersectionObserver(
               holder.children[i].style.opacity = "1";
             }
           }, delay);
+          holder.classList.add('lae-animated')
         }
 
-        if (holder && holder.classList.contains("lae-image")) {
-
-          holder.style.transitionTimingFunction =
-          "cubic-bezier(" + ease + ")";
+        if (holder) {
+          holder.style.transitionTimingFunction = "cubic-bezier(" + ease + ")";
 
           setTimeout(() => {
             setTimeout(() => {
@@ -39,12 +36,11 @@ const observer = new IntersectionObserver(
               holder.style.scale = "1";
             }, 1200);
           }, delay);
+          holder.classList.add("lae-animated");
         }
 
-        if (holder && holder.classList.contains("lae-fade")) {
-
-          holder.style.transitionTimingFunction =
-          "cubic-bezier(" + ease + ")";
+        if (holder) {
+          holder.style.transitionTimingFunction = "cubic-bezier(" + ease + ")";
 
           setTimeout(() => {
             setTimeout(() => {
@@ -56,6 +52,7 @@ const observer = new IntersectionObserver(
               holder.style.scale = "1";
             }, duration);
           }, delay);
+          holder.classList.add("lae-animated");
         }
 
         observer.unobserve(holder);
@@ -83,7 +80,9 @@ const run = () => {
   }
 
   text.forEach((element) => {
-    if (element.getAttribute("data-lae-split") === "false")
+    console.log('ran')
+    if(!element.classList.contains('lae-animated')) {
+      if (element.getAttribute("data-lae-split") === "false")
       observer.observe(element);
 
     if (element.getAttribute("data-lae-split") === "char") {
@@ -120,20 +119,26 @@ const run = () => {
 
     for (let i = 0; i < element.childElementCount; i++) {
       element.children[i].style.transform = "translate(" + angle + ")";
-    }
+    console.log('ran2')
+  }
 
     observer.observe(element);
+    }
   });
 
-  image.forEach((el) => observer.observe(el));
+  image.forEach(element => {
+    if(!element.classList.contains('lae-animated')) observer.observe(element)
+  });
 
   fade.forEach((el) => {
-    let angle = el.getAttribute("data-lae-angle");
+    if(!el.classList.contains('lae-animated')) {
+      let angle = el.getAttribute("data-lae-angle");
 
-    if (angle === null) angle = "0 , %100";
-
-    el.style.transform = "translate(" + angle + ")";
-    observer.observe(el);
+      if (angle === null) angle = "0 , %100";
+  
+      el.style.transform = "translate(" + angle + ")";
+      observer.observe(el);
+    }
   });
 
   console.log("LAE: system has been run");
